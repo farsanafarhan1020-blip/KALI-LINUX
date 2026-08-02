@@ -1,61 +1,250 @@
-# 🌐 Linux Networking Fundamentals
+<div align="center">
 
-> "Networking is the backbone of cybersecurity. Before learning tools like Nmap, Wireshark, Burp Suite, or Metasploit, you must understand how Linux communicates over a network."
+# 🐉 Kali Linux Masterclass
+## 📘 Phase 1 – Linux Fundamentals
+
+# 08 - Linux Networking Fundamentals
+
+*"Networking is the language computers use to communicate. Understanding it is the first step toward mastering cybersecurity."*
+
+![Linux](https://img.shields.io/badge/Linux-Networking-FCC624?style=for-the-badge&logo=linux)
+![Kali](https://img.shields.io/badge/Kali-Linux-557C94?style=for-the-badge&logo=kalilinux)
+![Networking](https://img.shields.io/badge/Networking-Essentials-blue?style=for-the-badge)
+![Cybersecurity](https://img.shields.io/badge/Cybersecurity-Foundation-red?style=for-the-badge)
+
+</div>
 
 ---
 
 # 📚 Table of Contents
 
-1. What is a Network?
-2. Network Interfaces
-3. IP Addresses
-4. MAC Addresses
-5. Hostname
-6. The `ip` Command
-7. Routing & Default Gateway
-8. Testing Connectivity with `ping`
-9. Viewing Network Connections (`ss`)
-10. `netstat` (Legacy Command)
-11. Downloading Files (`wget`)
-12. Accessing Web Resources (`curl`)
-13. DNS Basics
-14. DNS Lookup Commands
-15. Common Networking Commands
-16. Real-World Cybersecurity Use Cases
-17. Best Practices
-18. Key Takeaways
-19. Practice Questions
+- Introduction
+- What is Networking?
+- Types of Networks
+- Network Interfaces
+- IP Address
+- IPv4 vs IPv6
+- Public vs Private IP Addresses
+- MAC Address
+- IP Address vs MAC Address
+- Hostname
+- The `ip` Command
+- Understanding Interface Information
+- Routing
+- Default Gateway
+- Network Architecture
+- DNS Basics
+- DNS Resolution Process
+- Best Practices
+- Cybersecurity Perspective
 
 ---
 
-# 🌍 What is a Network?
+# 🎯 Learning Objectives
 
-A **network** is a group of two or more devices connected together to exchange information.
+After completing this lesson, you will be able to:
+
+✅ Understand computer networking fundamentals
+
+✅ Identify network interfaces
+
+✅ Understand IP and MAC addresses
+
+✅ Use Linux networking commands
+
+✅ Understand routing and gateways
+
+✅ Learn how DNS works
+
+✅ Build a strong networking foundation for cybersecurity
+
+---
+
+# 🌟 Introduction
+
+Every cybersecurity tool depends on networking.
+
+Whether you're using:
+
+- Nmap
+- Wireshark
+- Burp Suite
+- Metasploit
+- Hydra
+- SSH
+- FTP
+
+they all communicate through computer networks.
+
+Understanding networking means understanding **how attackers and defenders communicate across systems.**
+
+---
+
+# 🌐 What is Networking?
+
+A **computer network** is a collection of devices connected together so they can exchange information.
 
 Examples:
 
-- 💻 Laptop ↔ Router
-- 📱 Phone ↔ Wi-Fi
-- 🖥️ Computer ↔ Server
-- 🌐 Internet (a network of networks)
+- Laptop ↔ Laptop
+- Laptop ↔ Router
+- Phone ↔ Wi-Fi
+- Computer ↔ Server
+- Server ↔ Internet
 
-Without networking, computers cannot communicate with each other.
+The Internet itself is simply the **largest computer network in the world**.
+
+---
+
+# 🏠 Real-Life Analogy
+
+Imagine sending a letter.
+
+```
+You
+ ↓
+Post Office
+ ↓
+Road Network
+ ↓
+Destination House
+```
+
+Networking works similarly.
+
+```
+Computer
+ ↓
+Router
+ ↓
+Internet
+ ↓
+Destination Computer
+```
+
+Instead of letters, computers exchange **packets**.
+
+---
+
+# 🌍 Types of Networks
+
+## LAN (Local Area Network)
+
+A small network within a limited area.
+
+Examples:
+
+- Home Wi-Fi
+- Office Network
+- School Lab
+
+```
+Laptop
+   │
+Phone ─ Router ─ Printer
+   │
+Desktop
+```
+
+---
+
+## MAN (Metropolitan Area Network)
+
+Connects multiple LANs within a city.
+
+Example:
+
+```
+Office A
+     │
+City Network
+     │
+Office B
+```
+
+---
+
+## WAN (Wide Area Network)
+
+Connects networks across countries and continents.
+
+Example:
+
+```
+India
+   │
+Internet
+   │
+USA
+```
+
+The Internet is the biggest WAN.
 
 ---
 
 # 🔌 Network Interfaces
 
-A **Network Interface** is the hardware or virtual connection through which a computer sends and receives network traffic.
+A **Network Interface** is the connection through which your computer communicates.
 
-Examples:
+Think of it as a **door**.
 
-- Ethernet Adapter
-- Wi-Fi Adapter
+Every packet entering or leaving your system uses one of these interfaces.
+
+Examples include:
+
+- Ethernet
+- Wi-Fi
 - Virtual Machine Adapter
 - VPN Interface
 - Loopback Interface
 
-Think of a network interface as a **door**. Every piece of network traffic enters or leaves through one of these doors.
+---
+
+# 🖥 Common Linux Interfaces
+
+Older naming:
+
+```
+eth0
+eth1
+wlan0
+```
+
+Modern Linux naming:
+
+```
+enp0s3
+
+ens33
+
+wlp2s0
+```
+
+Loopback:
+
+```
+lo
+```
+
+---
+
+# 🔁 Loopback Interface
+
+The loopback interface allows your computer to communicate with itself.
+
+```
+127.0.0.1
+```
+
+or
+
+```
+localhost
+```
+
+Think of it as talking to yourself in a mirror.
+
+Applications often use loopback for local communication.
 
 ---
 
@@ -66,38 +255,114 @@ An **IP Address (Internet Protocol Address)** uniquely identifies a device on a 
 Example:
 
 ```
-192.168.1.100
+192.168.1.25
 ```
 
-Think of it as your **home address**.
+Without an IP address, computers wouldn't know where to send information.
 
-Without an IP address, other devices wouldn't know where to send data.
-
-## Types of IP Addresses
-
-### Private IP
-
-Used inside local networks.
-
-Examples:
-
-```
-192.168.x.x
-10.x.x.x
-172.16.x.x – 172.31.x.x
-```
-
-### Public IP
-
-Assigned by your Internet Service Provider (ISP).
-
-Used to communicate over the Internet.
+Think of it as your home's mailing address.
 
 ---
 
-# 🏷️ MAC Address
+# 🧮 Structure of an IPv4 Address
 
-Every network card has a unique **MAC (Media Access Control) Address**.
+Example:
+
+```
+192.168.1.25
+```
+
+It contains **four numbers**, separated by dots.
+
+Each number ranges from:
+
+```
+0 – 255
+```
+
+Each section is called an **octet**.
+
+```
+192
+
+168
+
+1
+
+25
+```
+
+---
+
+# 🌍 IPv4 vs IPv6
+
+## IPv4
+
+Example:
+
+```
+192.168.1.50
+```
+
+32-bit address
+
+Approximately **4.3 billion** addresses.
+
+---
+
+## IPv6
+
+Example:
+
+```
+2001:db8:85a3::8a2e:370:7334
+```
+
+128-bit address
+
+Supports an almost unlimited number of devices.
+
+Modern networks increasingly use IPv6.
+
+---
+
+# 🌎 Public vs Private IP
+
+## Public IP
+
+Assigned by your Internet Service Provider (ISP).
+
+Visible on the Internet.
+
+Example:
+
+```
+49.36.xxx.xxx
+```
+
+---
+
+## Private IP
+
+Used inside homes and offices.
+
+Common ranges:
+
+```
+10.0.0.0/8
+
+172.16.0.0 – 172.31.255.255
+
+192.168.0.0/16
+```
+
+Private IP addresses cannot be accessed directly from the Internet.
+
+---
+
+# 🏷 MAC Address
+
+Every Network Interface Card (NIC) has a unique hardware address.
 
 Example:
 
@@ -105,26 +370,28 @@ Example:
 00:1A:2B:3C:4D:5E
 ```
 
-Think of it as your network card's **serial number**.
+A MAC address is assigned by the manufacturer.
 
-Unlike an IP address, a MAC address is usually fixed to the hardware.
+Unlike IP addresses, MAC addresses rarely change.
+
+Think of it as your computer's fingerprint.
 
 ---
 
-# ⚖️ IP Address vs MAC Address
+# ⚖ IP Address vs MAC Address
 
 | IP Address | MAC Address |
 |------------|-------------|
 | Logical Address | Physical Address |
 | Can change | Usually permanent |
-| Used for routing | Identifies network hardware |
+| Used across networks | Used within local networks |
 | Assigned by network | Assigned by manufacturer |
 
 ---
 
-# 🖥️ Hostname
+# 🖥 Hostname
 
-A **Hostname** is the name given to a computer.
+A hostname is simply your computer's name.
 
 Example:
 
@@ -132,19 +399,32 @@ Example:
 kali
 ```
 
-Instead of remembering an IP address, users often recognize systems by their hostname.
-
 View hostname:
 
 ```bash
 hostname
 ```
 
+Another useful command:
+
+```bash
+hostnamectl
+```
+
+This displays:
+
+- Hostname
+- Operating System
+- Kernel Version
+- Architecture
+
 ---
 
 # 📡 The `ip` Command
 
-The modern networking command in Linux is:
+Modern Linux uses the **iproute2** package.
+
+The most important command:
 
 ```bash
 ip a
@@ -156,7 +436,7 @@ or
 ip addr
 ```
 
-Example output:
+Example:
 
 ```
 2: eth0
@@ -171,56 +451,65 @@ Example output:
 
 ---
 
-# Common Interfaces
+# 📖 Understanding `ip a`
 
-## Loopback
-
-```
-lo
-```
-
-Loopback address:
+Example:
 
 ```
-127.0.0.1
+2: wlan0:
 ```
 
-This allows your computer to communicate with itself.
+Interface name.
 
 ---
 
-## Ethernet
-
 ```
-eth0
+inet
 ```
 
-Represents a wired connection.
+IPv4 address.
 
 ---
 
-## Wireless
-
 ```
-wlan0
+inet6
 ```
 
-Represents a Wi-Fi connection.
+IPv6 address.
 
-Modern Linux systems may use names like:
+---
 
 ```
-enp0s3
-wlp2s0
+link/ether
 ```
+
+MAC Address.
+
+---
+
+```
+UP
+```
+
+Interface is active.
+
+---
+
+```
+DOWN
+```
+
+Interface is disabled.
 
 ---
 
 # 🚦 Routing
 
-A **Route** tells Linux where to send network traffic.
+Routing determines **where packets should travel**.
 
-View routing table:
+Linux stores this information in a routing table.
+
+View it:
 
 ```bash
 ip route
@@ -232,147 +521,62 @@ Example:
 default via 192.168.1.1 dev wlan0
 ```
 
+Meaning:
+
+- Default route
+- Gateway: 192.168.1.1
+- Interface: wlan0
+
 ---
 
 # 🚪 Default Gateway
 
 The **Default Gateway** is usually your router.
 
-When Linux doesn't know where to send traffic, it forwards it to the default gateway.
+When Linux doesn't know where to send traffic, it forwards it to the gateway.
 
-Think of the gateway as the **main exit** from your local network to the Internet.
-
----
-
-# 📶 Testing Connectivity
-
-## ping
-
-Used to test whether another host is reachable.
-
-```bash
-ping google.com
-```
-
-Stop:
+Think of it as the **main exit gate** from your local network.
 
 ```
-Ctrl + C
-```
+Laptop
 
-Send only four packets:
+↓
 
-```bash
-ping -c 4 google.com
-```
+Router (Gateway)
 
-### What ping tells you
+↓
 
-- Internet connectivity
-- DNS resolution
-- Network latency
-- Packet loss
+Internet
 
----
+↓
 
-# 📊 Viewing Network Connections
-
-## ss
-
-Modern Linux uses:
-
-```bash
-ss -tuln
-```
-
-Options:
-
-| Option | Meaning |
-|---------|----------|
-| -t | TCP |
-| -u | UDP |
-| -l | Listening Ports |
-| -n | Numeric Output |
-
-Example:
-
-```
-LISTEN
-22
-80
-443
-```
-
-Meaning:
-
-- Port 22 → SSH
-- Port 80 → HTTP
-- Port 443 → HTTPS
-
----
-
-# 📜 netstat (Legacy)
-
-Older systems may still use:
-
-```bash
-netstat -tuln
-```
-
-Today, **ss** is the preferred command because it is faster and more efficient.
-
----
-
-# 🌍 Downloading Files
-
-## wget
-
-Downloads files from the Internet.
-
-Example:
-
-```bash
-wget https://example.com/file.txt
-```
-
-Useful for:
-
-- Tools
-- Wordlists
-- Scripts
-- Software packages
-
----
-
-# 🌐 Accessing Web Resources
-
-## curl
-
-Displays data from a URL.
-
-```bash
-curl https://example.com
-```
-
-Shows the webpage source.
-
-View only HTTP headers:
-
-```bash
-curl -I https://example.com
-```
-
-Example:
-
-```
-HTTP/1.1 200 OK
-Server: nginx
-Content-Type: text/html
+Website
 ```
 
 ---
 
-# 📖 DNS (Domain Name System)
+# 🏗 Basic Network Architecture
+
+```
+               Internet
+                   │
+             ISP Modem
+                   │
+                Router
+          ┌────────┼────────┐
+          │        │        │
+      Laptop    Phone    Desktop
+```
+
+Every device receives its own IP address from the router.
+
+---
+
+# 🌐 DNS Basics
+
+DNS stands for:
+
+**Domain Name System**
 
 Humans remember:
 
@@ -392,7 +596,364 @@ Think of DNS as the **Internet's phonebook**.
 
 ---
 
-# 🔍 DNS Lookup
+# 🔄 DNS Resolution Process
+
+```
+User types:
+
+google.com
+
+        │
+
+        ▼
+
+DNS Server
+
+        │
+
+        ▼
+
+Returns
+
+142.250.x.x
+
+        │
+
+        ▼
+
+Browser connects to the server
+```
+
+Without DNS, users would have to memorize IP addresses for every website.
+
+---
+
+# 🔒 Cybersecurity Perspective
+
+Networking knowledge is essential for cybersecurity because attackers and defenders both rely on it.
+
+Professionals use networking concepts to:
+
+- Scan networks
+- Discover devices
+- Identify services
+- Detect suspicious traffic
+- Troubleshoot connectivity issues
+- Investigate incidents
+- Perform reconnaissance
+- Monitor network communications
+
+Understanding networking fundamentals is the first step before learning tools like:
+
+- Nmap
+- Wireshark
+- Burp Suite
+- Metasploit
+- TCPDump
+
+---
+
+# 💡 Best Practices
+
+✅ Learn both IPv4 and IPv6.
+
+✅ Understand the difference between public and private IP addresses.
+
+✅ Remember that `127.0.0.1` always refers to your own computer.
+
+✅ Learn the `ip` command instead of relying on the older `ifconfig`.
+
+✅ Always verify your network configuration before troubleshooting applications.
+
+---
+
+---
+
+# 📡 Testing Network Connectivity
+
+One of the first things a Linux administrator or cybersecurity professional checks is whether a system can communicate with another device.
+
+The most common command is:
+
+```bash
+ping google.com
+```
+
+Example Output:
+
+```
+64 bytes from 142.250.xxx.xxx:
+icmp_seq=1 ttl=117 time=18.5 ms
+```
+
+Stop ping by pressing:
+
+```
+Ctrl + C
+```
+
+---
+
+# 🎯 What Does `ping` Do?
+
+`ping` sends **ICMP Echo Request** packets to another host.
+
+If the host replies, it sends back an **ICMP Echo Reply**.
+
+This helps determine:
+
+- Is the host online?
+- Is the network working?
+- How long does communication take?
+- Is there packet loss?
+
+---
+
+# 📦 ICMP
+
+ICMP stands for:
+
+**Internet Control Message Protocol**
+
+It is mainly used for:
+
+- Diagnostics
+- Error reporting
+- Connectivity testing
+
+Unlike TCP and UDP, ICMP does **not** transport application data.
+
+---
+
+# ⏱ Ping Only a Few Times
+
+Instead of running forever:
+
+```bash
+ping -c 4 google.com
+```
+
+This sends exactly **4 packets**.
+
+---
+
+# 📊 Understanding Ping Output
+
+Example:
+
+```
+64 bytes from 142.250.xxx.xxx
+
+icmp_seq=1
+
+ttl=117
+
+time=18.2 ms
+```
+
+Meaning:
+
+| Field | Description |
+|---------|-------------|
+| bytes | Packet size |
+| icmp_seq | Packet number |
+| ttl | Time To Live |
+| time | Response time |
+
+---
+
+# 📈 Ping Statistics
+
+Example:
+
+```
+4 packets transmitted
+
+4 received
+
+0% packet loss
+```
+
+Good network:
+
+```
+0% packet loss
+```
+
+Poor network:
+
+```
+25% packet loss
+
+50% packet loss
+```
+
+High packet loss usually indicates network problems.
+
+---
+
+# 🌍 Downloading Files
+
+## wget
+
+`wget` downloads files directly from the internet.
+
+Example:
+
+```bash
+wget https://example.com/file.txt
+```
+
+Useful for downloading:
+
+- Wordlists
+- Tools
+- Scripts
+- Software
+- Updates
+
+Downloaded files are saved in the current directory.
+
+---
+
+# 🌐 curl
+
+Unlike `wget`, `curl` is designed to transfer data.
+
+Example:
+
+```bash
+curl https://example.com
+```
+
+Instead of downloading the webpage, it displays the HTML source.
+
+---
+
+# 📑 View HTTP Headers
+
+```bash
+curl -I https://example.com
+```
+
+Example:
+
+```
+HTTP/1.1 200 OK
+
+Server: nginx
+
+Content-Type: text/html
+```
+
+Security professionals often inspect headers to identify:
+
+- Web server software
+- Response codes
+- Security headers
+
+---
+
+# 🔌 Viewing Open Ports
+
+Linux provides several tools to inspect network connections.
+
+The modern command is:
+
+```bash
+ss -tuln
+```
+
+---
+
+# 📖 Understanding `ss`
+
+Options:
+
+| Option | Meaning |
+|---------|----------|
+| -t | TCP |
+| -u | UDP |
+| -l | Listening Ports |
+| -n | Numeric Output |
+
+---
+
+Example:
+
+```
+LISTEN
+
+22
+
+80
+
+443
+```
+
+Meaning:
+
+| Port | Service |
+|--------|----------|
+| 22 | SSH |
+| 80 | HTTP |
+| 443 | HTTPS |
+
+---
+
+# 🌐 Why Open Ports Matter
+
+Every network service listens on a port.
+
+Examples:
+
+```
+SSH
+
+↓
+
+22
+```
+
+```
+HTTP
+
+↓
+
+80
+```
+
+```
+HTTPS
+
+↓
+
+443
+```
+
+Attackers often scan ports to discover running services.
+
+Defenders monitor ports to detect unauthorized services.
+
+---
+
+# 📜 netstat (Legacy Command)
+
+Older Linux systems use:
+
+```bash
+netstat -tuln
+```
+
+Although still useful, **ss** is recommended because it is:
+
+- Faster
+- More efficient
+- Included in modern Linux distributions
+
+---
+
+# 🔍 DNS Lookup Commands
 
 ## dig
 
@@ -400,122 +961,396 @@ Think of DNS as the **Internet's phonebook**.
 dig google.com
 ```
 
+Displays:
+
+- IP Address
+- DNS Server
+- Query Time
+- Record Type
+
+---
+
 ## nslookup
 
 ```bash
 nslookup google.com
 ```
 
-Both commands display DNS information such as IP addresses.
+Provides a simpler DNS lookup.
+
+Both commands are useful when troubleshooting DNS issues.
 
 ---
 
-# 🛠️ Common Networking Commands
+# 🖥 Network Troubleshooting Workflow
 
-| Command | Purpose |
-|----------|----------|
-| hostname | Show system hostname |
-| ip a | Show network interfaces |
-| ip route | Show routing table |
-| ping | Test connectivity |
-| ping -c 4 | Send four packets |
-| ss -tuln | View listening ports |
-| netstat -tuln | Legacy alternative |
-| curl | Access web resources |
-| curl -I | View HTTP headers |
-| wget | Download files |
-| dig | DNS lookup |
-| nslookup | DNS lookup |
+When a website is unreachable:
 
----
+```
+Check Interface
 
-# 🔒 Cybersecurity Importance
+↓
 
-Networking is one of the most important topics in cybersecurity.
+Check IP Address
 
-Security professionals use these commands to:
+↓
 
-- Verify Internet connectivity
-- Troubleshoot DNS problems
-- Check listening services
-- Download security tools
-- Investigate suspicious connections
-- Verify web servers
-- Identify network configuration issues
+Check Gateway
 
-Examples:
+↓
 
-```bash
-ping target.com
+Ping Gateway
+
+↓
+
+Ping Internet
+
+↓
+
+Check DNS
+
+↓
+
+Inspect Open Connections
+
+↓
+
+Problem Identified
 ```
 
-Check connectivity.
+---
+
+# 🌍 Real-World Cybersecurity Example
+
+A penetration tester arrives at a client site.
+
+The first steps might be:
+
+```bash
+ip a
+```
+
+Identify interfaces.
+
+---
+
+```bash
+ip route
+```
+
+Identify gateway.
+
+---
+
+```bash
+ping 8.8.8.8
+```
+
+Verify internet connectivity.
+
+---
+
+```bash
+dig target.com
+```
+
+Resolve target IP.
+
+---
 
 ```bash
 ss -tuln
 ```
 
-View open/listening ports.
+Check local listening services.
+
+Networking commands are used before launching advanced security tools.
+
+---
+
+# 🛡 Cybersecurity Perspective
+
+Attackers use networking to:
+
+- Discover hosts
+- Scan ports
+- Enumerate services
+- Identify operating systems
+- Find exposed applications
+
+Defenders use networking to:
+
+- Detect intrusions
+- Monitor traffic
+- Investigate incidents
+- Verify configurations
+- Secure exposed services
+
+Networking knowledge forms the foundation of:
+
+- Ethical Hacking
+- Penetration Testing
+- Digital Forensics
+- Incident Response
+- SOC Analysis
+
+---
+
+# ⚠ Common Beginner Mistakes
+
+❌ Confusing MAC addresses with IP addresses.
+
+❌ Thinking `127.0.0.1` is the Internet IP.
+
+❌ Using `ifconfig` without learning `ip`.
+
+❌ Assuming a failed `ping` always means a host is offline.
+
+❌ Forgetting that firewalls may block ICMP traffic.
+
+---
+
+# 🧪 Hands-on Lab
+
+Run the following commands:
+
+```bash
+hostname
+```
+
+```bash
+hostnamectl
+```
+
+```bash
+ip a
+```
+
+```bash
+ip route
+```
+
+```bash
+ping -c 4 google.com
+```
 
 ```bash
 curl -I https://example.com
 ```
 
-Check web server response.
+```bash
+ss -tuln
+```
 
 ```bash
 dig google.com
 ```
 
-Investigate DNS records.
+If `dig` is unavailable:
+
+```bash
+nslookup google.com
+```
 
 ---
 
-# 💡 Best Practices
+# 🎯 Mini Challenge
 
-✅ Use `ip` instead of `ifconfig` on modern Linux systems.
+1.
 
-✅ Prefer `ss` over `netstat`.
+Find your hostname.
 
-✅ Verify Internet connectivity before troubleshooting applications.
+2.
 
-✅ Understand the difference between public and private IP addresses.
+Find your IP address.
 
-✅ Remember that `127.0.0.1` always refers to your own computer.
+3.
 
----
+Find your MAC address.
 
-# 📝 Key Takeaways
+4.
 
-- A network connects devices so they can communicate.
-- A network interface is the connection point for network traffic.
-- An IP address identifies a device on a network.
-- A MAC address uniquely identifies network hardware.
-- DNS translates domain names into IP addresses.
-- `ping` tests connectivity.
-- `ip a` displays network configuration.
-- `ip route` displays routing information.
-- `ss` displays listening ports.
-- `curl` accesses web content.
-- `wget` downloads files.
+Find your default gateway.
 
----
+5.
 
-# ❓ Practice Questions
+Ping Google four times.
 
-1. What is a network?
-2. What is the purpose of a network interface?
-3. What is the difference between an IP address and a MAC address?
-4. What is the loopback address?
-5. What does `ip a` display?
-6. What is a default gateway?
-7. What does `ping` do?
-8. What is the difference between `curl` and `wget`?
-9. What is DNS?
-10. Why is `ss` preferred over `netstat` on modern Linux?
-11. Which command displays the routing table?
-12. Which command displays HTTP headers only?
+6.
+
+Retrieve only HTTP headers from:
+
+```
+https://example.com
+```
+
+7.
+
+Display all listening TCP/UDP ports.
+
+8.
+
+Resolve the IP address of:
+
+```
+openai.com
+```
 
 ---
 
-> **Next Module:** Bash Scripting Fundamentals 🚀
+# 📋 Networking Cheat Sheet
+
+| Command | Purpose |
+|----------|----------|
+| `hostname` | Display hostname |
+| `hostnamectl` | Detailed hostname information |
+| `ip a` | Show interfaces and IP addresses |
+| `ip route` | Show routing table |
+| `ping host` | Test connectivity |
+| `ping -c 4 host` | Send four packets |
+| `ss -tuln` | Show listening ports |
+| `netstat -tuln` | Legacy port viewer |
+| `curl URL` | Retrieve webpage |
+| `curl -I URL` | View HTTP headers |
+| `wget URL` | Download file |
+| `dig domain` | DNS lookup |
+| `nslookup domain` | DNS lookup |
+
+---
+
+# 🧠 Memory Trick
+
+```
+ip
+
+↓
+
+Who am I on the network?
+```
+
+↓
+
+```
+ping
+
+↓
+
+Can I reach it?
+```
+
+↓
+
+```
+dig
+
+↓
+
+Where is it?
+```
+
+↓
+
+```
+curl
+
+↓
+
+What does it return?
+```
+
+↓
+
+```
+ss
+
+↓
+
+What is my computer listening on?
+```
+
+↓
+
+```
+wget
+
+↓
+
+Download it.
+```
+
+---
+
+# ❓ Interview Questions
+
+1. What is a network interface?
+
+2. What is the difference between an IP address and a MAC address?
+
+3. What is the purpose of the `ip` command?
+
+4. What is a default gateway?
+
+5. What is DNS?
+
+6. What does `ping` use to test connectivity?
+
+7. What is the difference between `curl` and `wget`?
+
+8. Why is `ss` preferred over `netstat`?
+
+9. What is the purpose of `dig`?
+
+10. Why is networking knowledge important in cybersecurity?
+
+---
+
+# 🎯 Key Takeaways
+
+✅ Networks allow devices to communicate.
+
+✅ IP addresses identify devices on a network.
+
+✅ MAC addresses identify network hardware.
+
+✅ DNS translates domain names into IP addresses.
+
+✅ `ip` is the modern Linux networking utility.
+
+✅ `ping` tests connectivity using ICMP.
+
+✅ `curl` retrieves web content.
+
+✅ `wget` downloads files.
+
+✅ `ss` displays listening ports.
+
+✅ Networking fundamentals are essential before learning tools like Nmap and Wireshark.
+
+---
+
+# 📚 Next Lesson
+
+➡ **09 - Bash Shell & Scripting Fundamentals**
+
+Topics include:
+
+- What is Bash?
+- Shell Environment
+- Variables
+- User Input
+- Conditional Statements (`if`)
+- Loops (`for`, `while`)
+- Functions
+- Command-Line Arguments
+- Command Chaining (`&&`, `||`, `;`)
+- Writing Your First Bash Script
+
+---
+
+<div align="center">
+
+## ⭐ "Cybersecurity begins with understanding how computers communicate before learning how to secure them."
+
+**Happy Learning! 🐧**
+
+</div>
